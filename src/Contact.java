@@ -12,7 +12,7 @@ public class Contact {
         this.firstName = firstName;
         this.lastName = lastName;
         this.number = number;
-        this.contact = firstName + " " + lastName + " " + number;
+        this.contact = firstName + " " + lastName + " |" + " " + number;
     }
 
     public String getContact() {

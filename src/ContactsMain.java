@@ -40,6 +40,8 @@ public class ContactsMain {
         System.out.println();
         switch (choice) {
             case 1:
+                System.out.println("Name:        ||    PhoneNumber:");
+                System.out.println("===============================");
                 viewAllContacts();
                 System.out.println("\n");
                 showMenu();
@@ -50,6 +52,7 @@ public class ContactsMain {
             case 3:
 
                 searchArray();
+                System.out.println();
                 showMenu();
                 break;
             case 4:
@@ -166,12 +169,17 @@ public class ContactsMain {
             for (Contact contact : contacts) {
                 String firstContactString = contact.getFirstName();
                 String lastContactString = contact.getLastName();
+                String numberContactString = contact.getNumber();
                 String contactInfo = contact.getContact();
                 if (firstContactString.toLowerCase().contains(search.toLowerCase())) {
                     System.out.println();
                     info = contactInfo;
                     searching = false;
                 } else if (lastContactString.toLowerCase().contains(search.toLowerCase())) {
+                    System.out.println();
+                    info = contactInfo;
+                    searching = false;
+                } else if (numberContactString.contains(search)) {
                     System.out.println();
                     info = contactInfo;
                     searching = false;
