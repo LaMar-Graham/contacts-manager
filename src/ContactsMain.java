@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
+//import java.util.Scanner;
 
 public class ContactsMain {
     public static Input userInput = new Input();
@@ -23,6 +24,7 @@ public class ContactsMain {
         }
         createFileIfNotExists(directory, filename);
 
+
         showMenu();
 
     }
@@ -30,7 +32,7 @@ public class ContactsMain {
 
     public static void showMenu() {
         Scanner scan = new Scanner(System.in);
-        System.out.println("1. View Contact.");
+        System.out.println("1. View all Contacts.");
         System.out.println("2. Add a new contact.");
         System.out.println("3. Search a contact by name.");
         System.out.println("4. Delete an existing contact.");
@@ -50,15 +52,12 @@ public class ContactsMain {
                 addNewContact();
                 break;
             case 3:
-
                 searchArray();
-                System.out.println();
                 showMenu();
                 break;
             case 4:
                 viewAllContacts();
                 deleteContact();
-
                 break;
             case 5:
                 System.out.println("Thank you for using Contact Manager 1.0");
@@ -78,7 +77,6 @@ public class ContactsMain {
     public static void viewAllContacts() {
 
         try {
-            System.out.println(); //this line is displayed when view all contacts is displayed
             for (Contact contact : contacts) {
                 System.out.println(contact.getContact());
             }
@@ -88,6 +86,7 @@ public class ContactsMain {
     }
 
     public static Contact addNewContact() {
+
         System.out.print("Please enter contacts first name: ");
         String firstName = userInput.getString();
         System.out.print("Last name: ");
@@ -108,7 +107,7 @@ public class ContactsMain {
 
     public static void again() {
         System.out.println("Would you like to add another? ");
-        System.out.print("(yes or no):\n");
+        System.out.print("(yes or no): ");
         boolean answer = userInput.yesNo();
         if (answer) {
             addNewContact();
@@ -169,17 +168,12 @@ public class ContactsMain {
             for (Contact contact : contacts) {
                 String firstContactString = contact.getFirstName();
                 String lastContactString = contact.getLastName();
-                String numberContactString = contact.getNumber();
                 String contactInfo = contact.getContact();
                 if (firstContactString.toLowerCase().contains(search.toLowerCase())) {
                     System.out.println();
                     info = contactInfo;
                     searching = false;
                 } else if (lastContactString.toLowerCase().contains(search.toLowerCase())) {
-                    System.out.println();
-                    info = contactInfo;
-                    searching = false;
-                } else if (numberContactString.contains(search)) {
                     System.out.println();
                     info = contactInfo;
                     searching = false;
