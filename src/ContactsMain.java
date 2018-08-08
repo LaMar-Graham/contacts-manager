@@ -8,31 +8,33 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+
+
 public class ContactsMain {
     public static Input userInput = new Input();
     public static ArrayList<Contact> contacts = new ArrayList<>();
     public static String directory = "data";
     public static String filename = "contacts.txt";
 
-    public static void main(String[] args) {
 
+
+    public static void main(String[] args) {
         try {
             readLines();
         } catch (IOException e) {
             e.printStackTrace();
         }
         createFileIfNotExists(directory, filename);
-
         showMenu();
-
     }
+
 
 
     public static void showMenu() {
         Scanner scan = new Scanner(System.in);
-        System.out.println("1. View Contact.");
+        System.out.println("1. View all Contacts.");
         System.out.println("2. Add a new contact.");
-        System.out.println("3. Search a contact by name.");
+        System.out.println("3. Search for a contact by name/number.");
         System.out.println("4. Delete an existing contact.");
         System.out.println("5. Exit");
         System.out.print("Enter an option(1, 2, 3, 4, 5):");
@@ -40,6 +42,8 @@ public class ContactsMain {
         System.out.println();
         switch (choice) {
             case 1:
+                System.out.println("Name:        ||    PhoneNumber:");
+                System.out.println("===============================");
                 viewAllContacts();
                 System.out.println("\n");
                 showMenu();
@@ -48,14 +52,12 @@ public class ContactsMain {
                 addNewContact();
                 break;
             case 3:
-
                 searchArray();
                 showMenu();
                 break;
             case 4:
                 viewAllContacts();
                 deleteContact();
-
                 break;
             case 5:
                 System.out.println("Thank you for using Contact Manager 1.0");
@@ -72,6 +74,8 @@ public class ContactsMain {
         }
     }
 
+
+
     public static void viewAllContacts() {
 
         try {
@@ -83,6 +87,8 @@ public class ContactsMain {
             System.out.println(e);
         }
     }
+
+
 
     public static Contact addNewContact() {
         System.out.print("Please enter contacts first name: ");
@@ -99,9 +105,10 @@ public class ContactsMain {
             System.out.println(e);
         }
         again();
-
         return newContact;
     }
+
+
 
     public static void again() {
         System.out.println("Would you like to add another? ");
@@ -114,8 +121,9 @@ public class ContactsMain {
         }
     }
 
-    public static void createFileIfNotExists(String directory, String filename) {
 
+
+    public static void createFileIfNotExists(String directory, String filename) {
         Path dataDirectory = Paths.get(directory);
         Path dataFile = Paths.get(directory, filename);
 
@@ -123,7 +131,6 @@ public class ContactsMain {
             if (Files.notExists(dataDirectory)) {
                 Files.createDirectories(dataDirectory);
             }
-
             if (Files.notExists(dataFile)) {
                 Files.createFile(dataFile);
             }
@@ -132,6 +139,8 @@ public class ContactsMain {
         }
     }
 
+
+
     public static void writeListToFile(ArrayList<Contact> contacts, String directory, String filename) throws IOException {
         ArrayList<String> out = new ArrayList<>();
         for (Contact contact : contacts) {
@@ -139,25 +148,24 @@ public class ContactsMain {
         }
         Path filepath = Paths.get(directory, filename);
         Files.write(filepath, out);
-
     }
 
+
+
     public static void readLines() throws IOException {
-
-
         Scanner txtInput = new Scanner(new File("data/contacts.txt"));
         while (txtInput.hasNext()) {
             Contact contact = new Contact(txtInput.next(), txtInput.next(), txtInput.next());
             contacts.add(contact);
         }
         txtInput.close();
-
     }
+
+
 
     public static void searchArray() {
         System.out.print("Who would you like to search for: ");
         String search = userInput.getString();
-
 
         boolean searching = true;
         String info = "";
@@ -166,12 +174,17 @@ public class ContactsMain {
             for (Contact contact : contacts) {
                 String firstContactString = contact.getFirstName();
                 String lastContactString = contact.getLastName();
+                String numberContactString = contact.getNumber();
                 String contactInfo = contact.getContact();
                 if (firstContactString.toLowerCase().contains(search.toLowerCase())) {
                     System.out.println();
                     info = contactInfo;
                     searching = false;
                 } else if (lastContactString.toLowerCase().contains(search.toLowerCase())) {
+                    System.out.println();
+                    info = contactInfo;
+                    searching = false;
+                } else if (numberContactString.contains(search)) {
                     System.out.println();
                     info = contactInfo;
                     searching = false;
@@ -184,11 +197,8 @@ public class ContactsMain {
                     }
                 }
             }
-
         }
         System.out.println(info);
-
-
     }
 
     public static void deleteContact() {
@@ -202,6 +212,5 @@ public class ContactsMain {
         }
         contacts.remove(delete);
         showMenu();
-
     }
 }
